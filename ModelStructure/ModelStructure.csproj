@@ -42,9 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Misc\UserApp.cs" />
-    <Compile Include="Core\Misc\UserRolResidentialSite.cs" />
-    <Compile Include="Core\ResidentialSite.cs" />
-    <Compile Include="Core\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

@@ -37,59 +37,7 @@ namespace AuthJWT.Controllers
         {
             var resultUser = new UserApp();
 
-            //Buscamos el usuario en base de datos
-            var user = await this.modelDbContext.GetOneAsync<Users>(x => x.UseUserName == username && x.UsePasswordHash == password);
-
-            //Si existe obtenemos los sites a los que pertenece y su respectivo rol
-            if (user != null)
-            {
-
-                resultUser.Usuario = new ModelStructure.Core.Usuario() {
-                    Id = user.UseIdUsuarioPk,
-                    FirstName = user.UseFirstName,
-                    SecondName = user.UseSecondName,
-                    FirstLastName = user.UseFirstLastName,
-                    SecondLastName = user.UseSecondName
-                };
-
-                //Lista de relaciones de ese usuario con los sites y los roles
-                var dataRolUser = this.modelDbContext.Search<UserRolesResidentialSites>(x => x.UrrIdUserFk == user.UseIdUsuarioPk)
-                                                     .Include(x => x.UrrIdRolFkNavigation).Include(x=> x.UrrIdResidentialSiteFkNavigation).ToList();
-
-             
-                //Obtenemos la info de los sites
-                foreach (var dru in dataRolUser)
-                {
-                    if (dru.UrrIdResidentialSiteFkNavigation != null)
-                    {
-                        resultUser.SitesWithRol.Add(new UserRolResidentialSite()
-                        {
-                            IdRol = dru.UrrIdRolFk,
-                            RolName = dru.UrrIdRolFkNavigation.RolName,
-                            Site = new ResidentialSite()
-                            {
-                                Id = dru.UrrIdResidentialSiteFkNavigation.RsiIdResidentialPk,
-                                Name = dru.UrrIdResidentialSiteFkNavigation.RsiName
-                            }
-                        });
-
-                    }
-                }
-
-               //Si solo tiene un site y un rol le asigna un token directamente
-                if (resultUser.SitesWithRol.Count == 1)
-                {
-                    //Creamosel token
-                    var tokenReturned = this.BuildToken(user.UseIdUsuarioPk, resultUser.SitesWithRol.FirstOrDefault().RolName);
-
-                    resultUser.Token = tokenReturned.Token;
-                    resultUser.ExpireToken = tokenReturned.ExpirationToken;
-
-                }
-
-            }
-            //Solo se aprueba login si se tiene sites asociados
-            resultUser.Login = (resultUser.SitesWithRol.Count > 0);
+        
 
             return Ok(resultUser);
         }
