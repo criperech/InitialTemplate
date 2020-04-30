@@ -1,0 +1,2 @@
+﻿Conexión BD = 
+Scaffold-DBContext "Server=tcp:saguir.database.windows.net;Initial Catalog=Db_Saguir;Persist Security Info=False;User ID=saguiradmin;Password=Saguir2020*" Microsoft.EntityFrameworkCore.SqlServer -OutputDir DataAccess/DataBase -f
