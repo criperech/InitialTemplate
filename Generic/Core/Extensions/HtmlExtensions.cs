@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using System;
 using System.Web;
 using System.Web.Mvc;
 
@@ -10,8 +10,14 @@ namespace Saguir.Core.Extensions
     {
         public static IHtmlString ToJson(this HtmlHelper helper, Object obj)
         {
+
+            var serializerSettings = new JsonSerializerSettings();
+
+            //Creamos el contrato para resolver como CamelCase
+            serializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
             //Convertimos el modelo en un string
-            var json = Newtonsoft.Json.JsonConvert.SerializeObject(obj, Newtonsoft.Json.Formatting.None);
+            var json = Newtonsoft.Json.JsonConvert.SerializeObject(obj, serializerSettings);
 
             //Remplazamos los caracteres que dañan el json https://www.json.org/
             var fix = json.Replace("\\", "\\\\")

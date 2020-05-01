@@ -1,0 +1,15 @@
+﻿@{
+
+    //Armamos la Url Para las peticiones desde javascript
+    string scheme = Request.Url.Scheme.ToString();
+    string host = Request.Url.Host.ToString().Replace("/", String.Empty);
+    string port = ((Request.Url.Port == 80) ? string.Empty : Request.Url.Port.ToString());
+    string appPath = Request.ApplicationPath.ToString().Replace("/", String.Empty);
+    string url_layout = scheme + "://" + host + (string.IsNullOrEmpty(port) ? string.Empty : (":" + port)) + "/" + (string.IsNullOrEmpty(appPath) ? string.Empty : (appPath + "/"));
+
+}
+<script>
+    //Url de la ruta absoluta
+    var $url = '@url_layout';
+</script>
+

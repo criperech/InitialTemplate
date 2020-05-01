@@ -18,7 +18,7 @@ namespace AuthJWT.DataAccess.Models
 
         public CoreModel()
         {
-          //  this.db = new Db_SaguirContext();
+            //  this.db = new Db_SaguirContext();
         }
         public async Task<bool> AddAsync<TEntity>(TEntity entity) where TEntity : class
         {
