@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace WebApi.DataAccess.DataBase
+﻿namespace WebApi.DataAccess.DataBase
 {
     public partial class Users
     {

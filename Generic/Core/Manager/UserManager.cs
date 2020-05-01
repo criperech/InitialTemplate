@@ -14,5 +14,13 @@ namespace Saguir.Core.Manager
         {
             context.Session["Token"] = userdata.Token;
         }
+
+        /// <summary>
+        /// Retorna vacio o el token si se encuentra logueado el user
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public static string GetCurrentToken(HttpContext context) => (context.Session["Token"] != null) ? context.Session["Token"].ToString() : string.Empty;
+
     }
 }
