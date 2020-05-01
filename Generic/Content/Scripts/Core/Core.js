@@ -16,7 +16,10 @@
                 url: $url + '/' + controller + '/' + action,
                 data: data,
                 success: function (response) {
-                    callBackSuccess(response);
+                    if (response.success)
+                        callBackSuccess(response);
+                    else
+                        callBackError(response.message);
                 },
                 error: function (xhr, status, error) {
                     console.log("Core HTTP ERROR", xhr);

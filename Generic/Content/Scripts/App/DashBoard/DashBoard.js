@@ -18,7 +18,7 @@
                                 console.log("Success AJAX", $response);
                             },
                             function ($error) {
-                                console.log("ERROR AJAX", $error);
+                                console.log("ERROR AJAX : ", $error);
                             });
                     }
 

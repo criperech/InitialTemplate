@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Saguir.Core.Configuration;
 using Saguir.Core.Extensions;
+using Saguir.Core.Manager;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -9,6 +10,7 @@ using System.Net.Http;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Saguir.Core.Services
 {
@@ -20,6 +22,7 @@ namespace Saguir.Core.Services
         private Task<HttpResponseMessage> request;
 
         private readonly string BASEURI;
+
 
         public WebApiCoreService(HttpClient http)
         {
@@ -47,6 +50,9 @@ namespace Saguir.Core.Services
                 //Construimos la url con la uri y los queryString
                 string url = this.BuildUrl(actionName, parameters);
 
+                this.client.DefaultRequestHeaders.Authorization =
+                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", UserManager.GetCurrentToken(HttpContext.Current));
+
                 //Obtenemos el resultado del procesamiento
                 var process = await this.client.GetAsync(url);
 
@@ -65,10 +71,11 @@ namespace Saguir.Core.Services
                     throw new Exception($"Solicitud inválida: {process.ReasonPhrase.ToString()}");
                 }
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                throw new Exception(ex.Message);
+                throw new Exception(e.Message);
             }
+
 
         }
 
@@ -132,6 +139,10 @@ namespace Saguir.Core.Services
             {
                 //Construimos la url con la uri y los queryString
                 string url = this.BuildUrl(actionName, parameters);
+
+                //Attachamos el JWT
+                this.client.DefaultRequestHeaders.Authorization =
+                   new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", UserManager.GetCurrentToken(HttpContext.Current));
 
                 //Creamos la petición
                 this.request = this.client.PostAsync(url, null);

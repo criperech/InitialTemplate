@@ -1,4 +1,5 @@
-﻿using Saguir.Core.Filters;
+﻿using ModelStructure.Core.Misc;
+using Saguir.Core.Filters;
 using Saguir.Core.Services;
 using Saguir.ViewModels;
 using System.Threading.Tasks;
@@ -30,13 +31,18 @@ namespace Saguir.Controllers
 
         public async Task<JsonResult> TestConectWithApi(string param1, int param2, bool param3)
         {
-           
-            //petición de prueba 2
-                var resultWebApi = await webApi.GetAsync<object>("Values");
+            try
+            {
+                var resultWebApi = await webApi.GetAsync<TestApi>("Values");
 
-                return Json(new { success = true, data = new { param1, param2, param3 }, responseWebApi = resultWebApi }, JsonRequestBehavior.AllowGet);
-            
-           
+                return Json(new { success = true, data = new { param1, param2, param3 }, resultWebApi }, JsonRequestBehavior.AllowGet);
+
+            }
+            catch (System.Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+                throw;
+            }
         }
     }
 }

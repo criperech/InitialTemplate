@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using ModelStructure.Core.Misc;
 using System.Collections.Generic;
 using System.Security.Claims;
 
@@ -22,12 +23,13 @@ namespace AuthJWT.Controllers
 
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult<TestApi> Get()
         {
 
 
             //ASì se debe obtener el enviroment
-            return new string[] { "value1", "value2", this.configSystem["TestEnviroment"], this.userManager.Identity.Name };
+            return Ok(new TestApi() { CurrentEnviroment = this.configSystem["TestEnviroment"],IdCurrentUser = this.userManager.Identity.Name });
+
         }
 
 
