@@ -31,7 +31,7 @@ namespace Saguir.Controllers
         public async Task<JsonResult> TestConectWithApi(string param1, int param2, bool param3)
         {
            
-            //petición de prueba
+            //petición de prueba 2
                 var resultWebApi = await webApi.GetAsync<object>("Values");
 
                 return Json(new { success = true, data = new { param1, param2, param3 }, responseWebApi = resultWebApi }, JsonRequestBehavior.AllowGet);
