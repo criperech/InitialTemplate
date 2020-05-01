@@ -65,7 +65,7 @@ namespace AuthJWT.Controllers
             var encryptingCredentials = new EncryptingCredentials(key, JwtConstants.DirectKeyUseAlg, SecurityAlgorithms.Aes256CbcHmacSha512);
 
             //Setteamos el tiempo de expiracion
-            var tiempoExpiracion = DateTime.UtcNow.AddMinutes(30);
+            var tiempoExpiracion = DateTime.UtcNow.AddHours(8);
 
             //Asignamos el payload y la firma que tendrá el token
             var token = new JwtSecurityTokenHandler().CreateJwtSecurityToken(
