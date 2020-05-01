@@ -1,21 +1,15 @@
-﻿using System;
+﻿using AuthJWT.DataAccess.Models;
+using AuthJWT.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using ModelStructure.Core.Misc;
+using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using AuthJWT.DataAccess.Models;
-using AuthJWT.MiddleWares.Attributes;
-using AuthJWT.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using ModelStructure.Core;
-using ModelStructure.Core.Misc;
-using WebApi.DataAccess.DataBase;
 
 namespace AuthJWT.Controllers
 {
@@ -24,7 +18,7 @@ namespace AuthJWT.Controllers
     public class LoginController : ControllerBase
     {
         private readonly ICoreModel modelDbContext;
-        IConfiguration configSystem;
+        readonly IConfiguration configSystem;
 
         public LoginController(IConfiguration configuration, ICoreModel coreModel)
         {
@@ -37,7 +31,11 @@ namespace AuthJWT.Controllers
         {
             var resultUser = new UserApp();
 
-        
+            //Login logic (user - password)
+
+
+            resultUser.Login = true;
+            resultUser.Token = this.BuildToken(username, "Administrator").Token;
 
             return Ok(resultUser);
         }

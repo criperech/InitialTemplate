@@ -1,8 +1,7 @@
-using Saguir.Core.Configuration;
 using Saguir.Core.Services;
+using Saguir.ViewModels;
 using System;
 using System.Net.Http;
-using System.Web;
 using Unity;
 using Unity.Injection;
 
@@ -14,7 +13,7 @@ namespace Saguir
     public static class UnityConfig
     {
         #region Unity Container
-        private static Lazy<IUnityContainer> container =
+        private static readonly Lazy<IUnityContainer> container =
           new Lazy<IUnityContainer>(() =>
           {
               var container = new UnityContainer();
@@ -49,6 +48,7 @@ namespace Saguir
             //Objeto de configuración
 
             container.RegisterType<IWebApiCoreService, WebApiCoreService>(new InjectionConstructor(new HttpClient()));
+            container.RegisterType<DashBoardVM, DashBoardVM>();
         }
     }
 }

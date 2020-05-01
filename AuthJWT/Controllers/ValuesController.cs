@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace AuthJWT.Controllers
 {
@@ -16,8 +12,8 @@ namespace AuthJWT.Controllers
     [Authorize(Roles = "Administrator,SuperAdministrador")]
     public class ValuesController : ControllerBase
     {
-        private ClaimsPrincipal userManager;
-        IConfiguration configSystem;
+        private readonly ClaimsPrincipal userManager;
+        readonly IConfiguration configSystem;
         public ValuesController(IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
             this.userManager = httpContextAccessor.HttpContext.User;
@@ -28,7 +24,7 @@ namespace AuthJWT.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-          
+
 
             //ASì se debe obtener el enviroment
             return new string[] { "value1", "value2", this.configSystem["TestEnviroment"], this.userManager.Identity.Name };

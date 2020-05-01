@@ -1,12 +1,7 @@
 ﻿using ModelStructure.Core.Misc;
 using Saguir.Core.Manager;
 using Saguir.Core.Services;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Saguir.Controllers
@@ -42,10 +37,8 @@ namespace Saguir.Controllers
             //verificamos la respuesta
             if (resultLogin.Login)
             {
-                /*
-                     * Comprobamos si tiene Token 
-                     * Si un usuario pertenece a varios sites el token se crea cuando el usuario elija el site al que desea ingresar
-                 */
+                // Comprobamos si tiene Token  //
+
                 if (!string.IsNullOrEmpty(resultLogin.Token))
                 {
                     //Creamos la sesion
@@ -53,18 +46,11 @@ namespace Saguir.Controllers
 
                     return Redirect("~/DashBoard");
                 }
-                else
-                {
-                    //redireccionamos ala vista dónde se elije el conjunto
-                    return Redirect("~/Auth");
-                }
-            }
-            else
-            {
 
-                //Retornar con error de login
-                return Redirect("~/Auth");
             }
+
+            //Retornar con error de login
+            return Redirect("~/Auth");
 
         }
     }

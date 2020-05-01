@@ -1,5 +1,4 @@
-﻿using WebApi.DataAccess.DataBase;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +13,12 @@ namespace AuthJWT.DataAccess.Models
         /// <summary>
         /// Contexto de la base de datos
         /// </summary>
-        private readonly Db_SaguirContext db;
+        private readonly DbContext db;
 
 
         public CoreModel()
         {
-            this.db = new Db_SaguirContext();
+          //  this.db = new Db_SaguirContext();
         }
         public async Task<bool> AddAsync<TEntity>(TEntity entity) where TEntity : class
         {
@@ -130,7 +129,7 @@ namespace AuthJWT.DataAccess.Models
         public virtual async Task<bool> SaveAsync()
         {
             //Guardamos los cambios en la base de datos
-            var save= await this.db.SaveChangesAsync() > 0;
+            var save = await this.db.SaveChangesAsync() > 0;
             this.db.Dispose();
             return save;
         }

@@ -1,20 +1,26 @@
 ﻿using Saguir.Core.Filters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using Saguir.ViewModels;
 using System.Web.Mvc;
-using System.Web.SessionState;
 
 namespace Saguir.Controllers
 {
     [UserAuthentication]
     public class DashBoardController : Controller
     {
+        DashBoardVM viewModel;
+
+        public DashBoardController(DashBoardVM vm)
+        {
+            this.viewModel = vm;
+
+        }
+
         // GET: DashBoard
         public ActionResult Index()
         {
-            return View();
+            this.viewModel.Propiedad = "Init Template - viewModel Works!";
+
+            return View(this.viewModel);
         }
     }
 }

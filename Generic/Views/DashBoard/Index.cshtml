@@ -1,9 +1,19 @@
-﻿
+﻿@model Saguir.ViewModels.DashBoardVM
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutMenu.cshtml";
 }
 
-<h2>Index</h2>
+<div id="dashboard-module">
 
-<h1>DashBoard</h1>
+    <h1>DashBoard </h1>
+    <h2><code>@Model.Propiedad</code></h2>
+    <h2><code>{{ test }}</code></h2>
+
+</div>
+
+
+@section CustomScripts {
+    <script src="~/Content/Scripts/App/DashBoard/DashBoard.js"></script>
+    <script>$(function () { DashBoard($.parseJSON(`@Html.ToJson(Model)`)).Load(); })</script>
+}

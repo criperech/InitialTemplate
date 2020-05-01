@@ -1,16 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AuthJWT.MiddleWares.Attributes
 {
     public class PrimerAtributo : ActionFilterAttribute
     {
         private readonly string campo;
-        private IHttpContextAccessor _httpContextAccessor;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public PrimerAtributo(IHttpContextAccessor ihttpContextAccessor)
         {

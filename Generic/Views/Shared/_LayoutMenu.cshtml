@@ -1,5 +1,28 @@
-﻿
-<h1>Esto es un menú</h1>
-@RenderBody()
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @Styles.Render("~/Content/Styles/bootstrap.min.css")
+    @Styles.Render("~/Content/Styles/styles.css")
+</head>
+<body>
+    <div class="container-fluid">
+        <p class="lol">
+            Aquí debería ir el menú!!
+        </p>
+        @RenderBody()
 
-@RenderSection
+    </div>
+    @Scripts.Render("~/Content/Scripts/Core/jquery_3.4.1.js")
+    @Scripts.Render("~/Content/Scripts/Core/bootstrap.min.js")
+    @Scripts.Render("~/Content/Scripts/Core/Core.js")
+    @Scripts.Render("~/Content/Scripts/Core/vue.js")
+
+    <!-- Custom Scripts-->
+    @RenderSection("CustomScripts")
+</body>
+</html>

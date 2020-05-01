@@ -1,29 +1,25 @@
 ﻿using Newtonsoft.Json;
 using Saguir.Core.Configuration;
-using Saguir.Core.Configuration.Models;
 using Saguir.Core.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
 
 namespace Saguir.Core.Services
 {
     public class WebApiCoreService : IWebApiCoreService
     {
 
-        private HttpClient client;
+        private readonly HttpClient client;
 
         private Task<HttpResponseMessage> request;
 
-        private string BASEURI;
+        private readonly string BASEURI;
 
         public WebApiCoreService(HttpClient http)
         {
@@ -31,7 +27,9 @@ namespace Saguir.Core.Services
 
             this.client = http;
             if (this.client.BaseAddress == null)
+            {
                 this.client.BaseAddress = new Uri(BASEURI);
+            }
         }
 
         /// <summary>
@@ -92,21 +90,29 @@ namespace Saguir.Core.Services
                 {
                     //Validamos si la respuesta es satisfactoria (Code 200)
                     if (data.StatusCode != HttpStatusCode.InternalServerError)
+                    {
                         //Convertirmos y retornamos la información
                         return JsonConvert.DeserializeObject<TReturn>(json);
+                    }
                     else if (data.StatusCode == HttpStatusCode.InternalServerError)
+                    {
                         throw new Exception($" {data.StatusCode.ToString()} -  {data.ReasonPhrase.ToString()}");
+                    }
                 }
                 else if (data.StatusCode == HttpStatusCode.OK)
                 {
                     if (typeof(TReturn) == typeof(string))
-                        return (TReturn) Convert.ChangeType(json?.Replace("\"", string.Empty), typeof(TReturn));
+                    {
+                        return (TReturn)Convert.ChangeType(json?.Replace("\"", string.Empty), typeof(TReturn));
+                    }
 
                     //Convertirmos y retornamos la información
                     return JsonConvert.DeserializeObject<TReturn>(json);
                 }
                 else
+                {
                     throw new Exception($" {data.StatusCode.ToString()} -  {data.ReasonPhrase.ToString()}");
+                }
             }
 
             //Retornamos el valor por defecto del objeto a retornar
@@ -150,8 +156,9 @@ namespace Saguir.Core.Services
                 {
                     //Retornamos 'null' si no existe el recurso
                     if (process.StatusCode == System.Net.HttpStatusCode.NotFound)
+                    {
                         return default;
-
+                    }
 
                     throw new Exception($"Solicitud inválida: {process.ReasonPhrase.ToString()}");
                 }
@@ -293,8 +300,9 @@ namespace Saguir.Core.Services
                 {
                     //Retornamos 'null' si no existe el recurso
                     if (process.StatusCode == System.Net.HttpStatusCode.NotFound)
+                    {
                         return default;
-
+                    }
 
                     throw new Exception($"Solicitud inválida: {process.ReasonPhrase.ToString()}");
                 }
@@ -392,8 +400,9 @@ namespace Saguir.Core.Services
 
                 }
                 else
+                {
                     return false;
-
+                }
             }
             catch (Exception ex)
             {
